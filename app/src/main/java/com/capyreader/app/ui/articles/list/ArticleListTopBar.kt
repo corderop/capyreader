@@ -17,6 +17,7 @@ import com.capyreader.app.ui.articles.FilterActionMenu
 import com.capyreader.app.ui.articles.FilterAppBarTitle
 import com.capyreader.app.ui.articles.listPaneInsets
 import com.capyreader.app.ui.components.ArticleSearch
+import com.capyreader.app.ui.components.Spacing
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.Feed
 import com.jocmp.capy.Folder
@@ -42,6 +43,7 @@ fun ArticleListTopBar(
     // to launch it; the active-search field/back-arrow used to live here.
     TopAppBar(
         scrollBehavior = scrollBehavior,
+        expandedHeight = Spacing.topBarHeight,
         windowInsets = TopAppBarDefaults.windowInsets.listPaneInsets(),
         title = {
             FilterAppBarTitle(
