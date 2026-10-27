@@ -1,5 +1,7 @@
 package com.capyreader.app.ui.articles.reader
 
+import com.jocmp.capy.Article
+import com.jocmp.capy.articles.flatten
 import com.jocmp.mallet.LinearArticle
 import com.jocmp.mallet.LinearAudio
 import com.jocmp.mallet.LinearBlockQuote
@@ -12,6 +14,9 @@ import com.jocmp.mallet.LinearVideo
 
 private const val WORDS_PER_MINUTE = 200
 private val WORD = Regex("\\S+")
+
+internal fun estimateReadingTimeMinutes(article: Article): Int? =
+    estimateReadingTimeMinutes(article.flatten())
 
 internal fun estimateReadingTimeMinutes(article: LinearArticle): Int? {
     val wordCount = article.elements.sumOf { it.wordCount() }

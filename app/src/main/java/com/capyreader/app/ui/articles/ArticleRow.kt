@@ -102,6 +102,7 @@ fun ArticleRow(
     onMarkAllRead: (range: MarkRead) -> Unit = {},
     currentTime: LocalDateTime,
     options: ArticleRowOptions = ArticleRowOptions(),
+    readingTimeMinutes: Int? = null,
 ) {
     val imageURL = article.imageURL
     val isMonochrome = LocalAppTheme.current.value == AppTheme.MONOCHROME
@@ -155,14 +156,23 @@ fun ArticleRow(
                     ) {
 
                         if (options.showFeedName) {
-                            Text(
-                                text = article.displayFeedName(LocalContext.current),
-                                color = feedNameColor,
-                                maxLines = 1,
-                                overflow = TextOverflow.Ellipsis,
-                                fontWeight = if (deEmphasizeFontWeight) FontWeight.Light else null,
+                            Row(
+                                horizontalArrangement = Arrangement.spacedBy(4.dp),
+                                verticalAlignment = Alignment.CenterVertically,
                                 modifier = Modifier.weight(1f)
-                            )
+                            ) {
+                                if (options.showIcon) {
+                                    FaviconBadge(article.faviconURL)
+                                }
+                                Text(
+                                    text = article.displayFeedName(LocalContext.current),
+                                    color = feedNameColor,
+                                    maxLines = 1,
+                                    overflow = TextOverflow.Ellipsis,
+                                    fontWeight = if (deEmphasizeFontWeight) FontWeight.Light else null,
+                                    modifier = Modifier.weight(1f, fill = false)
+                                )
+                            }
                             Spacer(Modifier.width(16.dp))
                         }
                         Row(
@@ -197,6 +207,23 @@ fun ArticleRow(
                                 color = feedNameColor,
                                 maxLines = 1,
                             )
+                            readingTimeMinutes?.let { minutes ->
+                                Spacer(Modifier.width(4.dp))
+
+                                Text(
+                                    text = "•",
+                                    color = feedNameColor,
+                                    maxLines = 1,
+                                )
+
+                                Spacer(Modifier.width(4.dp))
+
+                                Text(
+                                    text = stringResource(R.string.reader_reading_time, minutes),
+                                    color = feedNameColor,
+                                    maxLines = 1,
+                                )
+                            }
                         }
                     }
                 },
@@ -218,14 +245,6 @@ fun ArticleRow(
                         }
                     }
                 },
-                leadingContent = if (options.showIcon) {
-                    {
-                        FaviconBadge(article.faviconURL)
-                    }
-                } else {
-                    null
-                },
-
                 trailingContent = if (imageURL != null && options.imagePreview.showInline()) {
                     {
                         ArticleImage(
@@ -288,7 +307,8 @@ private fun ArticleImage(
         else -> {
             Modifier
                 .fillMaxWidth()
-                .aspectRatio(3 / 2f)
+                .padding(top = LARGE_IMAGE_TOP_SPACING)
+                .aspectRatio(16 / 9f)
         }
     }
 
@@ -305,22 +325,26 @@ private fun ArticleImage(
 @Composable
 fun PlaceholderArticleRow(imagePreview: ImagePreview = ImagePreview.NONE) {
     ListItem(
-        leadingContent = {
-            Box(
-                Modifier
-                    .size(16.dp)
-                    .clip(RoundedCornerShape(2.dp))
-                    .background(colorScheme.surfaceContainer)
-            )
-        },
         overlineContent = {
-            Box(
-                Modifier
-                    .fillMaxWidth(0.4f)
-                    .height(12.dp)
-                    .clip(MaterialTheme.shapes.small)
-                    .background(colorScheme.surfaceContainer)
-            )
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(4.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Box(
+                    Modifier
+                        .size(16.dp)
+                        .clip(RoundedCornerShape(2.dp))
+                        .background(colorScheme.surfaceContainer)
+                )
+                Box(
+                    Modifier
+                        .fillMaxWidth(0.4f)
+                        .height(12.dp)
+                        .clip(MaterialTheme.shapes.small)
+                        .background(colorScheme.surfaceContainer)
+                )
+            }
         },
         headlineContent = {
             Box(
@@ -337,7 +361,8 @@ fun PlaceholderArticleRow(imagePreview: ImagePreview = ImagePreview.NONE) {
                 Surface(
                     Modifier
                         .fillMaxWidth()
-                        .aspectRatio(3 / 2f)
+                        .padding(top = LARGE_IMAGE_TOP_SPACING)
+                        .aspectRatio(16 / 9f)
                         .clip(MaterialTheme.shapes.small)
                         .background(colorScheme.surfaceContainer)
                 ) {}
@@ -472,6 +497,7 @@ private val SELECTED_OUTLINE_CORNER = 12.dp
 
 private val SMALL_IMAGE_SIZE = 56.dp
 private val MEDIUM_IMAGE_SIZE = 84.dp
+private val LARGE_IMAGE_TOP_SPACING = 4.dp
 
 @Preview(
     uiMode = Configuration.UI_MODE_NIGHT_YES
@@ -504,6 +530,7 @@ fun ArticleRowPreview_Selected_DarkMode() {
                     selected = true,
                     onSelect = {},
                     currentTime = LocalDateTime.now(),
+                    readingTimeMinutes = 5,
                 )
                 ArticleRow(
                     article = article.copy(read = false),
@@ -622,6 +649,7 @@ fun ArticleRowPreview_Unread() {
             selected = false,
             onSelect = {},
             currentTime = LocalDateTime.now(),
+            readingTimeMinutes = 5,
         )
         ArticleRow(
             article = article.copy(imageURL = null),

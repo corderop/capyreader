@@ -308,17 +308,38 @@ private fun PreviewArticleRow(rowOptions: ArticleRowOptions) {
                         .padding(bottom = 2.dp)
                 ) {
                     if (rowOptions.showFeedName) {
-                        Text(
-                            text = PREVIEW_FEED_NAME,
-                            color = overlineColor,
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis,
+                        Row(
+                            horizontalArrangement = Arrangement.spacedBy(4.dp),
+                            verticalAlignment = Alignment.CenterVertically,
                             modifier = Modifier.weight(1f)
-                        )
+                        ) {
+                            if (rowOptions.showIcon) {
+                                FaviconBadge(url = null)
+                            }
+                            Text(
+                                text = PREVIEW_FEED_NAME,
+                                color = overlineColor,
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis,
+                                modifier = Modifier.weight(1f, fill = false)
+                            )
+                        }
                         Spacer(Modifier.width(16.dp))
                     }
                     Text(
                         text = PREVIEW_TIME,
+                        color = overlineColor,
+                        maxLines = 1,
+                    )
+                    Spacer(Modifier.width(4.dp))
+                    Text(
+                        text = "•",
+                        color = overlineColor,
+                        maxLines = 1,
+                    )
+                    Spacer(Modifier.width(4.dp))
+                    Text(
+                        text = stringResource(R.string.reader_reading_time, PREVIEW_READING_TIME),
                         color = overlineColor,
                         maxLines = 1,
                     )
@@ -345,11 +366,6 @@ private fun PreviewArticleRow(rowOptions: ArticleRowOptions) {
             } else {
                 null
             },
-            leadingContent = if (rowOptions.showIcon) {
-                { FaviconBadge(url = null) }
-            } else {
-                null
-            },
             trailingContent = if (rowOptions.imagePreview.showInline()) {
                 { PreviewImage(imagePreview = rowOptions.imagePreview) }
             } else {
@@ -365,7 +381,10 @@ private fun PreviewImage(imagePreview: ImagePreview) {
     val sizeModifier = when (imagePreview) {
         ImagePreview.SMALL -> Modifier.size(56.dp)
         ImagePreview.MEDIUM -> Modifier.size(84.dp)
-        else -> Modifier.fillMaxWidth().aspectRatio(3 / 2f)
+        else -> Modifier
+            .fillMaxWidth()
+            .padding(top = 4.dp)
+            .aspectRatio(16 / 9f)
     }
 
     val shape = MaterialTheme.shapes.small
@@ -410,6 +429,7 @@ private fun Modifier.monochromeBorder(shape: Shape): Modifier {
 private const val PREVIEW_TITLE = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua"
 private const val PREVIEW_FEED_NAME = "Lorem Ipsum"
 private const val PREVIEW_TIME = "3h"
+private const val PREVIEW_READING_TIME = 5
 private const val PREVIEW_SUMMARY = "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam."
 
 @Preview
