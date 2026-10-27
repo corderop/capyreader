@@ -57,6 +57,20 @@ fun PinToolbarsRow(viewModel: DisplaySettingsViewModel = koinViewModel()) {
 }
 
 @Composable
+fun KeepScreenOnRow(viewModel: DisplaySettingsViewModel = koinViewModel()) {
+    val keepScreenOn by viewModel.keepScreenOn.collectChangesWithCurrent()
+
+    RowItem {
+        TextSwitch(
+            checked = keepScreenOn,
+            onCheckedChange = viewModel::updateKeepScreenOn,
+            title = stringResource(R.string.settings_options_reader_keep_screen_on),
+            subtitle = stringResource(R.string.settings_options_reader_keep_screen_on_subtitle),
+        )
+    }
+}
+
+@Composable
 fun InAppBrowserRow(viewModel: GeneralSettingsViewModel = koinViewModel()) {
     RowItem {
         TextSwitch(

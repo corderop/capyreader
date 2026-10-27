@@ -140,6 +140,8 @@ fun ArticleView(
 
     HideNavigationBarWhilePagingEffect(hide = !showToolBar)
 
+    KeepScreenOnEffect()
+
     val contentPadding = rememberContentPadding(pinToolbars)
 
     CompositionLocalProvider(

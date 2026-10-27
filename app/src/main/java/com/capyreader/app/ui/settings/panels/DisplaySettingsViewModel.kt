@@ -64,6 +64,8 @@ class DisplaySettingsViewModel(
 
     val pinArticleBars = appPreferences.readerOptions.pinToolbars
 
+    val keepScreenOn = appPreferences.readerOptions.keepScreenOn
+
     var imageVisibility by mutableStateOf(appPreferences.readerOptions.imageVisibility.get())
         private set
 
@@ -84,6 +86,10 @@ class DisplaySettingsViewModel(
 
     fun updatePinArticleBars(pinBars: Boolean) {
         appPreferences.readerOptions.pinToolbars.set(pinBars)
+    }
+
+    fun updateKeepScreenOn(keepScreenOn: Boolean) {
+        appPreferences.readerOptions.keepScreenOn.set(keepScreenOn)
     }
 
     fun updateFontScale(fontScale: ArticleListFontScale) {

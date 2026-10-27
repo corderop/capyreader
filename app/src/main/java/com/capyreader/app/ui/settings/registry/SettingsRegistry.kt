@@ -114,6 +114,7 @@ object SettingsRegistry {
                         Setting.READER_IMAGES,
                         Setting.STICKY_FULL_CONTENT,
                         Setting.PIN_TOOLBARS,
+                        Setting.KEEP_SCREEN_ON,
                     ),
                 ),
                 SettingsSection(
@@ -219,6 +220,7 @@ object SettingsRegistry {
             Setting.READER_IMAGES -> R.string.reader_image_visibility_label
             Setting.STICKY_FULL_CONTENT -> R.string.settings_option_full_content_title
             Setting.PIN_TOOLBARS -> R.string.settings_options_reader_pin_top_toolbar
+            Setting.KEEP_SCREEN_ON -> R.string.settings_options_reader_keep_screen_on
             Setting.IN_APP_BROWSER -> R.string.settings_option_in_app_browser
             Setting.READER_SWIPE_DOWN -> R.string.settings_gestures_reader_swipe_down
             Setting.READER_SWIPE_UP -> R.string.settings_gestures_reader_swipe_up
@@ -266,6 +268,7 @@ object SettingsRegistry {
                 R.string.mark_read_position_floating_action_button,
             )
             Setting.STICKY_FULL_CONTENT -> listOf(R.string.settings_option_full_content_subtitle)
+            Setting.KEEP_SCREEN_ON -> listOf(R.string.settings_options_reader_keep_screen_on_subtitle)
             Setting.HORIZONTAL_PAGINATION -> listOf(R.string.settings_gestures_enable_horizontal_pagination_subtitle)
             Setting.REDUCE_MOTION -> listOf(R.string.settings_reduce_motion_subtitle)
             Setting.TAP_TO_PAGE -> listOf(R.string.settings_e_ink_tap_to_page_subtitle)
