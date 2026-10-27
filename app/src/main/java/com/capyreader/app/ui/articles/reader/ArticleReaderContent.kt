@@ -14,6 +14,7 @@ import androidx.compose.material3.ProvideTextStyle
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.LayoutCoordinates
@@ -42,6 +43,9 @@ fun ArticleReaderContent(
 ) {
     val readerStyle = LocalReaderStyle.current
     val audioEnclosures = article.enclosures.filter { it.type.startsWith("audio/") }
+    val readingTimeMinutes = remember(flattened) {
+        flattened?.let(::estimateReadingTimeMinutes)
+    }
 
     SelectionContainer {
     Column(
@@ -49,15 +53,16 @@ fun ArticleReaderContent(
         modifier = modifier.fillMaxWidth(),
     ) {
         Column(
-            verticalArrangement = Arrangement.spacedBy(16.dp),
+            verticalArrangement = Arrangement.spacedBy(24.dp),
             modifier = Modifier
                 .widthIn(max = MAX_READER_WIDTH)
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 32.dp),
+                .padding(start = 24.dp, top = 16.dp, end = 24.dp, bottom = 32.dp),
         ) {
             ArticleHeader(
                 article = article,
                 onOpenLink = onOpenExternalLink,
+                readingTimeMinutes = readingTimeMinutes,
             )
 
             audioEnclosures.forEach { enclosure ->
