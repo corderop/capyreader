@@ -29,8 +29,8 @@ fun FaviconBadge(
 
     Box(
         modifier = Modifier
-            .clip(RoundedCornerShape(2.dp))
-            .background(Color.White, RoundedCornerShape(2.dp))
+            .clip(BadgeShape)
+            .background(Color.White, BadgeShape)
     ) {
         Box(Modifier.padding(1.dp)) {
             if (!url.isNullOrBlank()) {
@@ -53,6 +53,8 @@ fun FaviconBadge(
         }
     }
 }
+
+private val BadgeShape = RoundedCornerShape(4.dp)
 
 @Preview
 @Composable
