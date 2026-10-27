@@ -43,6 +43,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.layout.ContentScale
@@ -241,7 +242,11 @@ fun ArticleRow(
                             )
                         }
                         if (imageURL != null && options.imagePreview == ImagePreview.LARGE) {
-                            ArticleImage(imageURL = imageURL, imagePreview = options.imagePreview)
+                            ArticleImage(
+                                imageURL = imageURL,
+                                imagePreview = options.imagePreview,
+                                dim = dim,
+                            )
                         }
                     }
                 },
@@ -249,7 +254,8 @@ fun ArticleRow(
                     {
                         ArticleImage(
                             imageURL = imageURL,
-                            imagePreview = options.imagePreview
+                            imagePreview = options.imagePreview,
+                            dim = dim,
                         )
                     }
                 } else {
@@ -293,7 +299,8 @@ fun ArticleRow(
 @Composable
 private fun ArticleImage(
     imageURL: String,
-    imagePreview: ImagePreview
+    imagePreview: ImagePreview,
+    dim: Boolean = false,
 ) {
     val sizeModifier = when (imagePreview) {
         ImagePreview.SMALL -> {
@@ -319,6 +326,7 @@ private fun ArticleImage(
         modifier = sizeModifier
             .clip(MaterialTheme.shapes.small)
             .background(colorScheme.surfaceContainer)
+            .alpha(if (dim) READ_IMAGE_ALPHA else 1f)
     )
 }
 
@@ -498,6 +506,7 @@ private val SELECTED_OUTLINE_CORNER = 12.dp
 private val SMALL_IMAGE_SIZE = 56.dp
 private val MEDIUM_IMAGE_SIZE = 84.dp
 private val LARGE_IMAGE_TOP_SPACING = 4.dp
+private const val READ_IMAGE_ALPHA = 0.5f
 
 @Preview(
     uiMode = Configuration.UI_MODE_NIGHT_YES
