@@ -212,7 +212,6 @@ fun ArticleView(
 
             ArticleTopBar(
                 show = showToolBar,
-                isScrolled = scrollState.showTopDivider,
                 articleId = article.id,
                 canDeletePage = article.isReadLater,
                 canSaveExternally = canSaveExternally,
