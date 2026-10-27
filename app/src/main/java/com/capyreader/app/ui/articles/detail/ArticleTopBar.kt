@@ -21,7 +21,6 @@ import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material.icons.outlined.FormatSize
 import androidx.compose.material.icons.outlined.Save
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -46,6 +45,7 @@ import com.capyreader.app.ui.articles.DeletePageDialog
 import com.capyreader.app.ui.articles.LocalArticleActions
 import com.capyreader.app.ui.articles.LocalLabelsActions
 import com.capyreader.app.ui.components.ToolbarTooltip
+import com.capyreader.app.ui.components.topBarBorder
 import com.capyreader.app.ui.fixtures.PreviewKoinApplication
 import com.capyreader.app.ui.components.LocalSnackbarHost
 import kotlinx.coroutines.launch
@@ -56,7 +56,6 @@ private val sizeSpec = spring<IntSize>(stiffness = 700f)
 @Composable
 fun ArticleTopBar(
     show: Boolean,
-    isScrolled: Boolean,
     articleId: String,
     canDeletePage: Boolean = false,
     canSaveExternally: Boolean = false,
@@ -94,6 +93,7 @@ fun ArticleTopBar(
                 ),
             ) {
                 TopAppBar(
+                    modifier = Modifier.topBarBorder(),
                     expandedHeight = ArticleBarDefaults.TopBarHeight,
                     navigationIcon = {
                         ArticleNavigationIcon(
@@ -181,12 +181,6 @@ fun ArticleTopBar(
                     ),
                 )
             }
-            if (isScrolled) {
-                HorizontalDivider(
-                    color = MaterialTheme.colorScheme.surfaceContainerHighest,
-                    thickness = 0.5f.dp,
-                )
-            }
         }
     }
 
@@ -220,7 +214,6 @@ private fun ArticleTopBarPreview() {
     PreviewKoinApplication {
         ArticleTopBar(
             show = true,
-            isScrolled = false,
             articleId = "",
             onClose = {}
         )
