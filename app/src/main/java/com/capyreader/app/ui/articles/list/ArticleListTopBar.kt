@@ -5,11 +5,13 @@ import androidx.compose.material.icons.rounded.Menu
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarDefaults.pinnedScrollBehavior
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.capyreader.app.R
@@ -18,6 +20,7 @@ import com.capyreader.app.ui.articles.FilterAppBarTitle
 import com.capyreader.app.ui.articles.listPaneInsets
 import com.capyreader.app.ui.components.ArticleSearch
 import com.capyreader.app.ui.components.Spacing
+import com.capyreader.app.ui.components.topBarBorder
 import com.jocmp.capy.ArticleFilter
 import com.jocmp.capy.Feed
 import com.jocmp.capy.Folder
@@ -41,10 +44,19 @@ fun ArticleListTopBar(
 ) {
     // Search runs in its own full-surface overlay (see SearchView), so the list top bar only needs
     // to launch it; the active-search field/back-arrow used to live here.
+    val containerColor = MaterialTheme.colorScheme.surface
+
     TopAppBar(
+        modifier = Modifier.topBarBorder(),
         scrollBehavior = scrollBehavior,
         expandedHeight = Spacing.topBarHeight,
         windowInsets = TopAppBarDefaults.windowInsets.listPaneInsets(),
+        // Keep one color while the list scrolls. Material swaps to scrolledContainerColor as
+        // soon as content moves underneath the bar.
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = containerColor,
+            scrolledContainerColor = containerColor,
+        ),
         title = {
             FilterAppBarTitle(
                 filter = filter,
