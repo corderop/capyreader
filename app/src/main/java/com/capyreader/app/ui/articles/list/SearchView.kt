@@ -39,6 +39,7 @@ import com.capyreader.app.ui.articles.ScrollToSelectedArticleEffect
 import com.capyreader.app.ui.articles.listPaneInsets
 import com.capyreader.app.ui.components.ArticleSearch
 import com.capyreader.app.ui.components.SearchTextField
+import com.capyreader.app.ui.components.Spacing
 import com.jocmp.capy.Article
 
 /**
@@ -76,6 +77,7 @@ fun SearchView(
             contentWindowInsets = ScaffoldDefaults.contentWindowInsets.listPaneInsets(),
             topBar = {
                 TopAppBar(
+                    expandedHeight = Spacing.topBarHeight,
                     windowInsets = TopAppBarDefaults.windowInsets.listPaneInsets(),
                     navigationIcon = {
                         IconButton(onClick = search.clear) {

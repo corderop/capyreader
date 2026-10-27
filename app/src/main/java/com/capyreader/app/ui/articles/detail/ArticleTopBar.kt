@@ -94,6 +94,7 @@ fun ArticleTopBar(
                 ),
             ) {
                 TopAppBar(
+                    expandedHeight = ArticleBarDefaults.TopBarHeight,
                     navigationIcon = {
                         ArticleNavigationIcon(
                             isFullscreen = isFullscreen,

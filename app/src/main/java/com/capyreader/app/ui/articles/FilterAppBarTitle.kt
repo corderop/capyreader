@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.sp
 import com.capyreader.app.R
 import com.capyreader.app.ui.navigationTitle
 import com.jocmp.capy.ArticleFilter
@@ -60,7 +61,8 @@ fun FilterAppBarTitle(
         Text(
             text,
             maxLines = 1,
-            overflow = TextOverflow.Ellipsis
+            overflow = TextOverflow.Ellipsis,
+            style = MaterialTheme.typography.titleLarge.copy(fontSize = 20.sp),
         )
     }
 }
