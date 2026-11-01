@@ -44,6 +44,11 @@ class InlineVideoTest {
 
     @Before
     fun setUp() {
+        // Entering fullscreen video hides the system bars, which makes Android show the
+        // immersive-mode confirmation window on AVDs that haven't confirmed it yet. That
+        // window takes input focus and can swallow the back key, so dismiss it up front.
+        device.executeShellCommand("settings put secure immersive_mode_confirmations confirmed")
+
         server.dispatcher = object : Dispatcher() {
             override fun dispatch(request: RecordedRequest): MockResponse {
                 return MockResponse.Builder()
